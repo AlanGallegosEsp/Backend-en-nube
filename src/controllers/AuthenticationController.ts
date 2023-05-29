@@ -17,11 +17,11 @@ class AuthenticationController extends AbstractController{
         if(this.instance){
             return this.instance;
         }
-        this.instance = new AuthenticationController('authentication');
+        this.instance = new AuthenticationController('cliente');
         return this.instance;
     }
     protected initRoutes(): void {
-        this.router.post('/singup', this.signup.bind(this));
+        this.router.post('/signup', this.signup.bind(this));
         this.router.post('/verify', this.verify.bind(this));
         this.router.post('/signin', this.signin.bind(this));
         this.router.get('/test', this.authMiddleware.verifyToken, this.test.bind(this));
@@ -33,7 +33,17 @@ class AuthenticationController extends AbstractController{
     }
 
     private async test(req:Request,res:Response){
-        res.status(200).send("Esto es una prueba");
+      try {
+        const user = await UserModel.get('d121c36e-3760-4dfc-b65b-e6d213da17b8');
+        res.status(200).send({ message: "Esto es una prueba", user: user });
+      } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send({ message: "Error retrieving user", error: error.message });
+        } else {
+            res.status(500).send({ message: "Error retrieving user", error: "Unknown error" });
+        }
+      }
+        //res.status(200).send("Esto es una prueba");
     }
 
     private async verify(req:Request,res:Response){
@@ -70,19 +80,22 @@ class AuthenticationController extends AbstractController{
                 awsCognitoId:user.UserSub,
                 name,
                 role,
-                email
+                email,
+                accountId:user.UserSub.substring(0, 8),
+                balance:0,
             },
             {
                 overwrite:false
             }
         )
         console.log("Usuario guardado en base de datos NoSQL");
-        await db["User"].create({
-            awsCognitoId:user.UserSub,
-            name,
-            role,
-            email
-        })
+        //await db["User"].create({
+        //    awsCognitoId:user.UserSub,
+        //    name,
+        //    role,
+        //    email,
+        //    accountId
+        //})
             console.log("Usuario creado correctamente", user);
             res.status(201).send({message:"User signedUp", user});
         }catch(error:any){

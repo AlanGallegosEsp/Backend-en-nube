@@ -17,6 +17,8 @@ const UserModel = dynamodb.define('user',{
 		name: joi.string().required(),
 		role: joi.string().required().default(UserRoles.AGENT),
 		email: joi.string().required().email(),
+    accountId: joi.string().required(),
+    balance: joi.required(),
     },
     tableName:`User${PREFIX_TABLE}`,
     indexes: [
@@ -28,6 +30,13 @@ const UserModel = dynamodb.define('user',{
 	],
 });
 
+UserModel.get('awsCognitoId', function(err, user) {
+    if (err) {
+        console.log('Error retrieving user: ', err);
+    } else {
+        console.log('User data: ', user);
+    }
+});
 
 // dynamodb.createTables((err:any)=>{
 //     if(err)
