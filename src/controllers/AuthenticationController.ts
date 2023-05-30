@@ -89,15 +89,8 @@ class AuthenticationController extends AbstractController{
             }
         )
         console.log("Usuario guardado en base de datos NoSQL");
-        //await db["User"].create({
-        //    awsCognitoId:user.UserSub,
-        //    name,
-        //    role,
-        //    email,
-        //    accountId
-        //})
-            console.log("Usuario creado correctamente", user);
-            res.status(201).send({message:"User signedUp", user});
+        console.log("Usuario creado correctamente", user);
+        res.status(201).send({message:"Usuario registrado", user});
         }catch(error:any){
             return res.status(500).send({code:error.code, message:error.message})
         }

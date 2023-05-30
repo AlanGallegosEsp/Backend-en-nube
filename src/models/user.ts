@@ -32,6 +32,9 @@ module.exports = (sequelize:any, DataTypes:any) => {
           through:'ProjectUser'
       })
     }
+  
+
+
   }
   User.init({
     awsCognitoId:{
