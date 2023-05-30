@@ -27,8 +27,8 @@ export default class D_PaymentsController extends AbstractController {
   protected initRoutes(): void {
     // Implement the routes for the D_Payments controller
     this.router.get('/saldo',this.authMiddleware.verifyToken, this.getBalance.bind(this));
-    this.router.post('/retiro',  this.authMiddleware.verifyToken, this.sendPayment.bind(this));
-    this.router.post('/deposito', this.createPayment.bind(this));
+    this.router.post('/retiro',  this.authMiddleware.verifyToken, this.sendWithdrawal.bind(this));
+    this.router.post('/deposito', this.sendPayment.bind(this));
   }
 
   protected validateBody(type: any) {
@@ -38,14 +38,14 @@ export default class D_PaymentsController extends AbstractController {
 
 
   private async getBalance(req: Request, res: Response) {
-    const {accountId} = req.body;
+    const {no_cuenta} = req.body;
     try {
-        const user: any = await UserModel.get(accountId)
+        const user: any = await UserModel.get(no_cuenta)
       if (user) {
         const balance = user.get('balance');
         res.status(200).send({message:"Bienvenido",  balance });
       } else {
-        res.status(404).json({ message: "User account not found" });
+        res.status(404).json({ message: "Usuario no encontrado" });
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -59,7 +59,7 @@ export default class D_PaymentsController extends AbstractController {
 
   
 
-  private async createPayment(req: Request, res: Response) {
+  private async sendPayment(req: Request, res: Response) {
     const { no_cuenta, cantidad } = req.body;
 
     if (!no_cuenta || !cantidad) {
@@ -91,7 +91,7 @@ export default class D_PaymentsController extends AbstractController {
     }
   }
 
-  private async sendPayment(req: Request, res: Response) {
+  private async sendWithdrawal(req: Request, res: Response) {
     const { no_cuenta, cantidad } = req.body;
 
     if (!no_cuenta || !cantidad) {
