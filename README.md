@@ -1,7 +1,7 @@
-# Backend-en-nube
+# API Referece
 ### SignUp
 ```http
-POST http://44.205.252.151:8080/cliente/signup
+POST /cliente/signup
 ```
 | Parameter | Type | Description |
 |:--------- |:---- |:----------- |
@@ -13,7 +13,7 @@ POST http://44.205.252.151:8080/cliente/signup
 
 ### Verify
 ```http
-POST http://44.205.252.151:8080/cliente/verify
+POST /cliente/verify
 ```
 | Parameter | Type | Description |
 |:--------- |:---- |:----------- |
@@ -22,7 +22,7 @@ POST http://44.205.252.151:8080/cliente/verify
 
 ### SignIn
 ```http
-POST http://44.205.252.151:8080/cliente/signin
+POST /cliente/signin
 ```
 | Parameter | Type | Description |
 |:--------- |:---- |:----------- |
@@ -33,7 +33,7 @@ POST http://44.205.252.151:8080/cliente/signin
 
 ### Saldo
 ```http
-GET http://44.205.252.151:8080/cuenta/saldo
+GET /cuenta/saldo
 ```
 | Parameter | Type | Description |
 |:--------- |:---- |:----------- |
@@ -43,7 +43,7 @@ GET http://44.205.252.151:8080/cuenta/saldo
 
 ### Deposito
 ```http
-POST http://44.205.252.151:8080/cuenta/deposito
+POST /cuenta/deposito
 ```
 | Parameter | Type | Description |
 |:--------- |:---- |:----------- |
@@ -54,7 +54,7 @@ POST http://44.205.252.151:8080/cuenta/deposito
 
 ### Retiro
 ```http
-POST http://44.205.252.151:8080/cuenta/retiro
+POST /cuenta/retiro
 ```
 | Parameter | Type   | Description                                        |
 |:--------- |:------ |:-------------------------------------------------- |
